@@ -1,0 +1,40 @@
+package com.kifiyapro.bunchi.modle;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.Instant;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
+@Table(name = "Adopt")
+@Entity
+public class Adopt {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "adoption_id", nullable = false)
+    private Long adoption_id;
+
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pet_id", nullable = false)
+    private Pet pet;
+
+
+    @Column(name = "created_on")
+    private Instant created_on;
+
+    @Column(name = "updated_on")
+    private Instant updated_on;
+
+}

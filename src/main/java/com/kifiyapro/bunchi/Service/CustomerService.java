@@ -24,12 +24,18 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
+    /*****************************************
+     * add customer and reponse the customerId
+     * @Autor kidus
+     * @param customerRequestDto
+     * @return
+     */
 
-    public CustomerResponseDto addCustomer(CustomerRequestDto customerRequestDto) {
+    public CustomerResponseDto add_customer(CustomerRequestDto customerRequestDto) {
 //        System.out.println("customerRequestDto="+customerRequestDto.getFullname()+"  ---------  "+customerRequestDto.getPhonenumber());
         Customer existingCustomer = customerRepository.findByPhonenumber(customerRequestDto.getPhone());
         if (existingCustomer != null) {
-            return new CustomerResponseDto("failed", existingCustomer.getCustomer_id());
+            return new CustomerResponseDto("failed to add the phone number exites ", existingCustomer.getCustomer_id());
         } else {
             Customer customer = new Customer();
             customer.setFullname(customerRequestDto.getName());

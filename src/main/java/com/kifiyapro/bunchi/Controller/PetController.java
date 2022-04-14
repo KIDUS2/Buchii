@@ -1,7 +1,10 @@
 package com.kifiyapro.bunchi.Controller;
 
 import com.kifiyapro.bunchi.Service.PetService;
+import com.kifiyapro.bunchi.dto.PetIdResponseDto;
+import com.kifiyapro.bunchi.dto.requestDto.PetRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +22,16 @@ import java.util.List;
 
 
 public class PetController {
-
-
     @Autowired
     PetService petService;
+
+    @PostMapping("/create_pet")
+    public ResponseEntity<PetIdResponseDto> create_pet(@RequestBody PetRequestDto petRequestDto) {
+        return ResponseEntity.ok().body(petService.create_pet(petRequestDto));
+    }
+
+
+
 
 
 

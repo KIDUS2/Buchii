@@ -11,7 +11,7 @@ import java.time.Instant;
 @NoArgsConstructor
 public class CustomerResponseDto {
     private Long customer_id;
-    private Long phonenumber;
+    private String phonenumber;
     private String fullname;
     private Instant updated_on;
     private Instant created_on;

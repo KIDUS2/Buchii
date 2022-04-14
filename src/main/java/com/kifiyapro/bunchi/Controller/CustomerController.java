@@ -17,9 +17,9 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/addCustomer")
-    public ResponseEntity<CustomerResponseDto> createPasstion(@RequestBody CustomerRequestDto customerRequestDto) {
-        return ResponseEntity.ok().body(customerService.addCustomer(customerRequestDto));
+    @PostMapping("/add_customer")
+    public ResponseEntity<CustomerResponseDto> add_customer(@RequestBody CustomerRequestDto customerRequestDto) {
+        return ResponseEntity.ok().body(customerService.add_customer(customerRequestDto));
     }
     @PostMapping("/updateCustomer")
     public ResponseEntity<ResponseDto> updateCustomer(@RequestParam long id, CustomerRequestDto customerRequestDto) {

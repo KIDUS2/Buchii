@@ -1,8 +1,11 @@
 package com.kifiyapro.bunchi.Controller;
 
 import com.kifiyapro.bunchi.Service.PetService;
+import com.kifiyapro.bunchi.dto.Baselist;
 import com.kifiyapro.bunchi.dto.PetIdResponseDto;
+import com.kifiyapro.bunchi.dto.PetSearchDto;
 import com.kifiyapro.bunchi.dto.requestDto.PetRequestDto;
+import com.kifiyapro.bunchi.dto.responseDto.PetResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,39 @@ public class PetController {
     public ResponseEntity<PetIdResponseDto> create_pet(@RequestBody PetRequestDto petRequestDto) {
         return ResponseEntity.ok().body(petService.create_pet(petRequestDto));
     }
+
+
+    @GetMapping("/get_pets")
+
+    public Baselist<PetResponseDto> get_pets(@RequestBody PetSearchDto p) {
+        return petService.get_pets(p);
+    }
+
+
+//    @PostMapping("/uploadMultipleFiles")
+//    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("id") Long id,
+//                                                        @RequestParam("files") MultipartFile[] files) {
+//        List<UploadFileResponse> uploadFileResponses = new ArrayList<>();
+//
+//        Arrays.asList(files).stream().forEach(file -> {
+//            String fileName = petService.storeToDb(id, file, false, "users", null);
+//            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                    .path(fileStorageService.usersPath)
+//                    .path("/")
+//                    .path(fileName)
+//                    .toUriString();
+//
+//            UploadFileResponse uploadFileResponse = new UploadFileResponse();
+//            uploadFileResponse.setFileName(fileName);
+//            uploadFileResponse.setFileDownloadUri(fileDownloadUri);
+//            uploadFileResponse.setFileName(file.getContentType());
+//            uploadFileResponse.setSize(file.getSize());
+//
+//            uploadFileResponses.add(uploadFileResponse);
+//        });
+//        return uploadFileResponses;
+//
+//    }
 
 
 

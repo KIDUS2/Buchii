@@ -8,6 +8,7 @@ import com.kifiyapro.bunchi.dto.requestDto.AdoptRequestDto;
 import com.kifiyapro.bunchi.dto.responseDto.AdoptResponseDtos;
 import com.kifiyapro.bunchi.dto.responseDto.CustomerResponseDto;
 import com.kifiyapro.bunchi.dto.responseDto.PetResponseDto;
+import com.kifiyapro.bunchi.dto.responseDto.ReportResponseDto;
 import com.kifiyapro.bunchi.modle.Adopt;
 import com.kifiyapro.bunchi.modle.Customer;
 import com.kifiyapro.bunchi.modle.Pet;
@@ -61,20 +62,19 @@ public class AdoptService {
 //    }
 
 
-
     public Baselist<AdoptResponseDtos> get_adoption_requests(SearchDto searchDto) {
         Baselist<AdoptResponseDtos> adoptResponseDtosBaselist = new Baselist();
         List<AdoptResponseDtos> adoptResponseDtos = new ArrayList<>();
-        List<Adopt> adopts = adoptRepository.findAllByAdoptTimeBetween(searchDto.getFrom_date(), searchDto.getTo_date());
+        List<Adopt> adopts = adoptRepository.findBewteenDate(searchDto.getFrom_date(), searchDto.getTo_date());
         adopts.forEach(adopt -> {
-        CustomerResponseDto customerResponseDto=new CustomerResponseDto();
+            CustomerResponseDto customerResponseDto = new CustomerResponseDto();
             customerResponseDto.setCustomer_id(adopt.getCustomer().getCustomer_id());
             customerResponseDto.setCreated_on(adopt.getCustomer().getCreated_on());
             customerResponseDto.setPhonenumber(adopt.getCustomer().getPhonenumber());
             customerResponseDto.setFullname(adopt.getCustomer().getFullname());
             customerResponseDto.setUpdated_on(adopt.getCustomer().getUpdated_on());
-        PetResponseDto petResponseDto=new PetResponseDto();
-            petResponseDto.setName(adopt.getPet().getType());
+            PetResponseDto petResponseDto = new PetResponseDto();
+            petResponseDto.setType(adopt.getPet().getType());
             petResponseDto.setAge(adopt.getPet().getAge());
             petResponseDto.setCreated_on(adopt.getPet().getCreated_on());
             petResponseDto.setStatus(adopt.getPet().getGood_with_children());
@@ -100,9 +100,19 @@ public class AdoptService {
         return adoptResponseDtosBaselist;
 
     }
-//    public Baselist<AdoptResponseDtos> generate_report(SearchDto searchDto) {
-//        Baselist<AdoptResponseDtos> adoptResponseDtosBaselist = new Baselist();
-//        List<AdoptResponseDtos> adoptResponseDtos = new ArrayList<>();
-//        List<Adopt> adopts = adoptRepository.findAllByAdoptTimeBetween(searchDto.getFrom_date(), searchDto.getTo_date());
-//        adopts.forEach(adopt -> {
+
+    public ReportResponseDto generate_report(SearchDto searchDto) {
+
+        List<AdoptRepository.ListweeklyandTotalCount> listweeklyandTotalCounts = adoptRepository.listweeklyandTotalCounts(searchDto.getFrom_date(), searchDto.getTo_date());
+        listweeklyandTotalCounts.forEach(listweeklyandTotalCount -> {
+            ReportResponseDto reportResponseDto = new ReportResponseDto();
+
+                Datas datas =new Datas();
+            datas.setWeekly_adoption_requests(listweeklyandTotalCounts);
+            reportResponseDto.setData(datas);
+            listweeklyandTotalCounts.add(listweeklyandTotalCount);
+
+        });
+        return new ReportResponseDto("sucess",null);
+    }
 }

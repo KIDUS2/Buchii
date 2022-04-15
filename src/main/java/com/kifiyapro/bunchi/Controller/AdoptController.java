@@ -6,6 +6,7 @@ import com.kifiyapro.bunchi.dto.Baselist;
 import com.kifiyapro.bunchi.dto.SearchDto;
 import com.kifiyapro.bunchi.dto.requestDto.AdoptRequestDto;
 import com.kifiyapro.bunchi.dto.responseDto.AdoptResponseDtos;
+import com.kifiyapro.bunchi.dto.responseDto.ReportResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,12 @@ public class AdoptController {
     @PostMapping("/adopt")
     public ResponseEntity<AdoptResponseDto> adopt(@RequestBody AdoptRequestDto adoptRequestDto) {
         return ResponseEntity.ok().body(adoptService.adopt(adoptRequestDto));
+    }
+
+
+    @PostMapping("/generate_report")
+    public ResponseEntity<ReportResponseDto> generate_report(@RequestBody SearchDto searchDto) {
+        return ResponseEntity.ok().body(adoptService.generate_report(searchDto));
     }
 // @PostMapping("/generate_report")
 //    public ResponseEntity<AdoptResponseDto> generate_report(@RequestBody AdoptRequestDto adoptRequestDto) {

@@ -1,5 +1,6 @@
 package com.kifiyapro.bunchi.dto.responseDto;
 
+import com.kifiyapro.bunchi.Service.Datas;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReportResponseDto {
-private Long adopted_pet_types;
-private  Long weekly_adoption_requests;
+private String status;
+private Datas data;
 
 }

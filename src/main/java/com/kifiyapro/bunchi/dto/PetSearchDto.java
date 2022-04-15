@@ -1,23 +1,18 @@
-package com.kifiyapro.bunchi.dto.responseDto;
+package com.kifiyapro.bunchi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+public class PetSearchDto {
 
-public class PetResponseDto {
-    private Long pet_id;
     private String type;
     private Long age;
     private String size;
-    private Boolean status;
+    private Boolean good_with_children;
     private String gender;
-    private Instant created_on;
-    private Instant updated_on;
-
+    private Long limit;
 }

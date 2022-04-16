@@ -4,9 +4,10 @@ import com.kifiyapro.bunchi.modle.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface PetRepository extends JpaRepository<Pet, Long> {
 //
     @Query(value = "select * from Pet where type=:type and age=:age and size =:size and good_with_children=:good and gender=:gender limit :limit",nativeQuery = true)
@@ -20,7 +21,7 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
             long count();
 
-    Pet findByPet_id(Long id);
+//       Pet findPetsByPet_id(Long id);
 
 
 //    Page<UserSubscription>

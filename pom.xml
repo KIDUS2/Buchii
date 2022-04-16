@@ -12,8 +12,8 @@
     <artifactId>bunchi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>bunchi</name>
-    <description>bunchi project for Spring Boot</description>
+    <name>buchi</name>
+    <description>buchi project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -69,7 +69,14 @@
 <!--            <groupId>org.springframework.boot</groupId>-->
 <!--            <artifactId>spring-boot-starter-datas-jpa</artifactId>-->
 <!--        </dependency>-->
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -112,6 +119,11 @@
             <groupId>com.oracle.database.security</groupId>
             <artifactId>osdt_cert</artifactId>
             <version>19.6.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-core</artifactId>
+            <version>2.0.13.Final</version>
         </dependency>
     </dependencies>
 

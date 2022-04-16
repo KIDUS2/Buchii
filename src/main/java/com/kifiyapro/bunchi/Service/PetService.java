@@ -90,7 +90,7 @@ public class PetService {
         String fileName;
 
             Picture picture = new Picture();
-            picture.setPet(petRepository.findByPet_id(id));
+//            picture.setPet(petRepository.findPetsByPet_id(id));
             fileName = storeFile(id, multipartFile, whereToStore);
             picture.setPricturePath("pet" + "/" + fileName);
             picture.setUploadedOn(Instant.now());

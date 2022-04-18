@@ -12,7 +12,7 @@ public class PetSearchDto {
     private String type;
     private Long age;
     private String size;
-    private Boolean good_with_children;
+    private Boolean goodWithChildren;
     private String gender;
     private Long limit;
 }

@@ -4,8 +4,7 @@ import com.kifiyapro.bunchi.dto.Baselist;
 import com.kifiyapro.bunchi.dto.PetIdResponseDto;
 import com.kifiyapro.bunchi.dto.PetSearchDto;
 import com.kifiyapro.bunchi.dto.ResponseDto;
-import com.kifiyapro.bunchi.dto.requestDto.PetRequestDto;
-import com.kifiyapro.bunchi.dto.responseDto.PetResponseDto;
+import com.kifiyapro.bunchi.dto.responseDto.PetRes;
 import com.kifiyapro.bunchi.modle.Pet;
 import com.kifiyapro.bunchi.modle.Picture;
 import com.kifiyapro.bunchi.repository.PetRepository;
@@ -47,32 +46,55 @@ public class PetService {
         this.pictureRepository = pictureRepository;
         this.fileStorageLocationForPet = Paths.get(PetPath).toAbsolutePath().normalize();    }
 
-
-    public PetIdResponseDto create_pet(PetRequestDto petRequestDto) {
-
-
+    /***********
+     * create pet and uploade picture
+     * @param pets and multipartFile
+     * @return
+     */
+    public PetIdResponseDto create_pet(Pet pets ,MultipartFile multipartFile) {
         Pet pet = new Pet();
-        pet.setType(petRequestDto.getType());
-        pet.setAge(petRequestDto.getAge());
-        pet.setGender(petRequestDto.getGender());
-        pet.setCreated_on(Instant.now());
-        pet.setPhoto("");
-        pet.setGood_with_children(petRequestDto.getGood_with_children());
-
-        petRepository.save(pet);
-        return new PetIdResponseDto("success", pet.getPet_id());
-
-    }
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        try {
 
 
-    public Baselist<PetResponseDto> get_pets(PetSearchDto petRequestDto) {
-        Baselist<PetResponseDto> petResponseDtoBaselist = new Baselist();
-        List<PetResponseDto> petResponseDtos = new ArrayList<>();
-        List<Pet> pets = petRepository.listPetBy(petRequestDto.getType(), petRequestDto.getAge(), petRequestDto.getSize(), petRequestDto.getGood_with_children(), petRequestDto.getGender(), petRequestDto.getLimit());
+            pet.setType(pets.getType());
+            pet.setAge(pets.getAge());
+            pet.setGender(pets.getGender());
+            pet.setCreatedOn(Instant.now());
+            pet.setSize(pets.getSize());
+            pet.setPhoto(fileName);
+            pet.setGoodWithChildren(pets.getGoodWithChildren());
+
+            petRepository.save(pet);
+            String uploadDir = "pet-photos/" + pet.getPetId();
+
+            FileUploader.saveFile(uploadDir, fileName, multipartFile);
+
+            return new PetIdResponseDto("success", pet.getPetId());
+
+        }catch (Exception e){
+        return new PetIdResponseDto("failed to get the id",pet.getPetId());
+        }
+
+        }
+
+
+
+    /***********************
+     * resopnse for pet from local database  and form petfinder
+     * @param petRequestDto
+     * @return
+     */
+
+    public Baselist<PetRes> get_pets(PetSearchDto petRequestDto) {
+        Baselist<PetRes> petResponseDtoBaselist = new Baselist();
+        List<PetRes> petResponseDtos = new ArrayList<>();
+        List<Pet> pets = petRepository.findAllByTypeAndAgeAndSizeAndGoodWithChildrenAndGender(petRequestDto.getType(), petRequestDto.getAge(), petRequestDto.getSize(), petRequestDto.getGoodWithChildren(),petRequestDto.getGender(),petRequestDto.getLimit());
         pets.forEach(pet -> {
-            PetResponseDto petResponseDto = new PetResponseDto();
-            petResponseDto.setPet_id(pet.getPet_id());
-//                petResponseDto.set
+            PetRes petResponseDto = new PetRes();
+            petResponseDto.setPetId(pet.getPetId());
+//            petResponseDto.setCreatedOn(pet.getCreatedOn());
+
 
 
             petResponseDtos.add(petResponseDto);
@@ -86,6 +108,13 @@ public class PetService {
 
     }
 
+    /**************
+     * picture uploader for the pet and add in the databases
+     * @param id
+     * @param multipartFile
+     * @param whereToStore
+     * @return
+     */
     public String storeToDb(Long id, MultipartFile multipartFile,String whereToStore) {
         String fileName;
 
@@ -99,6 +128,13 @@ public class PetService {
 
     }
 
+    /***********
+     *
+     * @param id
+     * @param file
+     * @param whereToStore
+     * @return
+     */
     private String storeFile(Long id, MultipartFile file, String whereToStore) {
         String originalFileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String fileName = "";

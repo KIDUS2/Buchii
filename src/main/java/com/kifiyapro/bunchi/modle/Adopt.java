@@ -20,7 +20,7 @@ public class Adopt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "adoption_id", nullable = false)
-    private Long adoption_id;
+    private Long adoptionId;
 
 
     @ManyToOne(optional = false)
@@ -35,9 +35,10 @@ public class Adopt {
 
 
     @Column(name = "created_on")
-    private Instant created_on;
+    private Instant createdOn;
+
 
     @Column(name = "updated_on")
-    private Instant updated_on;
+    private Instant updatedOn;
 
 }

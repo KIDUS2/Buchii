@@ -11,13 +11,13 @@ import java.time.Instant;
 @NoArgsConstructor
 
 public class PetResponseDto {
-    private Long pet_id;
+    private Long petId;
     private String type;
     private Long age;
     private String size;
     private Boolean status;
     private String gender;
-    private Instant created_on;
-    private Instant updated_on;
+    private Instant createdOn;
+    private Instant updatedOn;
 
 }

@@ -19,7 +19,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id", nullable = false)
-    private Long customer_id;
+    private Long customerId;
 
     @Column(name = "fullname")
     private String fullname;
@@ -28,14 +28,11 @@ public class Customer {
     private String phonenumber;
 
     @Column(name = "created_on")
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on")
-    private Instant updated_on;
-//
-//    @ManyToOne(optional = false)
-//    @JoinColumn(name = "pet", nullable = false)
-//    private Pet pet;
+    private Instant updatedOn;
+
 
 
 }

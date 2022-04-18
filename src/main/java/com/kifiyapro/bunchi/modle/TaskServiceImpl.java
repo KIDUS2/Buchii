@@ -2,8 +2,6 @@ package com.kifiyapro.bunchi.modle;
 
 import com.kifiyapro.bunchi.dto.TaskDTO;
 import com.kifiyapro.bunchi.dto.responseDto.ResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,11 +15,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl {
-    @Value("${resource.tasks}")
+//    @Value("${resource.tasks}")
     private String resource;
-    @Value("${resource.tasks}/{id}")
+//    @Value("${resource.tasks}/{id}")
     private String idResource;
-    @Autowired
+//    @Autowired
     private RestTemplate restTemplate;
 
     public List<TaskDTO> findAll() {

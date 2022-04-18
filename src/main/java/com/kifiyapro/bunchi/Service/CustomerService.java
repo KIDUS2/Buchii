@@ -35,16 +35,16 @@ public class CustomerService {
 //        System.out.println("customerRequestDto="+customerRequestDto.getFullname()+"  ---------  "+customerRequestDto.getPhonenumber());
         Customer existingCustomer = customerRepository.findByPhonenumber(customerRequestDto.getPhone());
         if (existingCustomer != null) {
-            return new CustomerResponseDto("failed to add the phone number exites ", existingCustomer.getCustomer_id());
+            return new CustomerResponseDto("failed to add the phone number exites ", existingCustomer.getCustomerId());
         } else {
             Customer customer = new Customer();
             customer.setFullname(customerRequestDto.getName());
-            customer.setCreated_on(Instant.now());
+            customer.setCreatedOn(Instant.now());
             customer.setPhonenumber(customerRequestDto.getPhone());
             System.out.println("customer=" + customer.getFullname() + "  ---------  " + customer.getPhonenumber());
 
             customerRepository.save(customer);
-            return new CustomerResponseDto("success", customer.getCustomer_id());
+            return new CustomerResponseDto("success", customer.getCustomerId());
 
         }
     }
@@ -54,7 +54,7 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id).get();
         customer.setFullname(customerRequestDto.getName());
         customer.setPhonenumber(customerRequestDto.getPhone());
-        customer.setUpdated_on(Instant.now());
+        customer.setUpdatedOn(Instant.now());
         customerRepository.save(customer);
         return new ResponseDto(true, "Updated Successfully");
     }

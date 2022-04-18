@@ -37,7 +37,7 @@ public class AdoptController {
 
     @GetMapping("/get_adoption_requests")
 
-    public Baselist<AdoptResponseDtos> get_adoption_requests(@RequestBody SearchDto s) {
+    public Baselist<AdoptResponseDtos> get_adoption_requests(SearchDto s) {
         return adoptService.get_adoption_requests(s);
     }
 }

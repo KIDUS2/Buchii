@@ -18,14 +18,14 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pet_id", nullable = false)
-    private Long pet_id;
+    private Long petId;
 
     @Column(name = "type")
     private String type;
     @Column(name = "age")
     private Long age;
     @Column(name = "good_with_children")
-    private Boolean good_with_children;
+    private Boolean goodWithChildren;
 
     @Column(name = "gender")
     private String gender;
@@ -37,8 +37,8 @@ public class Pet {
 
 
     @Column(name = "created_on")
-    private Instant created_on;
+    private Instant createdOn;
     @Column(name = "updated_on")
-    private Instant updated_on;
+    private Instant updatedOn;
 
 }

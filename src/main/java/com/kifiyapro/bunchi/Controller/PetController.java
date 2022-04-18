@@ -5,7 +5,7 @@ import com.kifiyapro.bunchi.dto.Baselist;
 import com.kifiyapro.bunchi.dto.PetIdResponseDto;
 import com.kifiyapro.bunchi.dto.PetSearchDto;
 import com.kifiyapro.bunchi.dto.requestDto.PetRequestDto;
-import com.kifiyapro.bunchi.dto.responseDto.PetResponseDto;
+import com.kifiyapro.bunchi.dto.responseDto.PetRes;
 import com.kifiyapro.bunchi.dto.responseDto.UploadFileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//import springfox.documentation.service.ResponseMessage;
+
 
 @RestController
 @CrossOrigin(origins = {"*"})
@@ -44,11 +44,16 @@ public class PetController {
 
     @GetMapping("/get_pets")
 
-    public Baselist<PetResponseDto> get_pets(@RequestBody PetSearchDto p) {
+    public Baselist<PetRes> get_pets(PetSearchDto p) {
         return petService.get_pets(p);
     }
 
-
+    /*************************
+     * file uploader
+     * @param id
+     * @param files
+     * @return
+     */
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("id") Long id,
                                                         @RequestParam("files") MultipartFile[] files) {
@@ -79,28 +84,4 @@ public class PetController {
 
 
 
-
-    @PostMapping("/upload")
-    public String uploadFiles(@RequestParam("files") MultipartFile[] files) {
-        String message = "";
-        try {
-            List<String> fileNames = new ArrayList<>();
-            Arrays.asList(files).stream().forEach(file -> {
-//                petService.save(file);
-                fileNames.add(file.getOriginalFilename());
-            });
-
-            fileNames.forEach(fileNames1 -> {
-                System.out.println("weeeeeeeee" + fileNames1.getBytes());
-                fileNames.add("1");
-
-            });
-            message = "Uploaded the files successfully: " + fileNames;
-//            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("444"));
-            return "yes";
-        } catch (Exception e) {
-            message = "Fail to upload files!";
-            return "no";
-        }
-    }
 }

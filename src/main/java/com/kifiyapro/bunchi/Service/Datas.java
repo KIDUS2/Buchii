@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Datas {
-//    private List<AdoptRepository> adopted_pet_types;
+    private List<AdoptRepository> adopted_pet_types;
     private List<AdoptRepository.ListweeklyandTotalCount> weekly_adoption_requests ;
 }

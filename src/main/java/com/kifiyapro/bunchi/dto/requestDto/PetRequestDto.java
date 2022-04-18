@@ -15,7 +15,7 @@ public class PetRequestDto {
     private String type;
     private Long age;
     private String size;
-    private Boolean good_with_children;
+    private Boolean goodWithChildren;
     private String gender;
     private  MultipartFile[] files;
     private List<String> photo;

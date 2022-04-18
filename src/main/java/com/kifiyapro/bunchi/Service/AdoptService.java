@@ -39,55 +39,73 @@ public class AdoptService {
         this.petRepository = petRepository;
     }
 
-
+    /***************************
+     *
+     * adopt take pet and customer id
+     * @Author kidus
+     * @param adoptRequestDto
+     * @return
+     */
     public AdoptResponseDto adopt(AdoptRequestDto adoptRequestDto) {
-        Customer customer = customerRepository.getById(adoptRequestDto.getCustomer_Id());
-        Pet pet = petRepository.getById(adoptRequestDto.getPet_Id());
-        Adopt adopt = new Adopt();
-//        try{
+        Customer customer = customerRepository.findById(adoptRequestDto.getCustomer_Id()).get();
+        Pet pet = petRepository.findById(adoptRequestDto.getPet_Id()).get();
 
-        if (customer == null || pet == null) {
+        try{
+
+            Adopt adopt = new Adopt();
+        if ( customer.getCustomerId() == 0 ||  pet.getPetId() == 0) {
             return new AdoptResponseDto("customer or pet id does  not exit", null);
         }
+                if(adopt.getCustomer().getCustomerId()!=0 || adopt.getPet().getPetId()!=0){
+                return new AdoptResponseDto("new or pet id does  not exit", null);
+
+            }
 
         adopt.setPet(pet);
         adopt.setCustomer(customer);
-        adopt.setCreated_on(Instant.now());
+        adopt.setCreatedOn(Instant.now());
         adoptRepository.save(adopt);
-        return new AdoptResponseDto("success", adopt.getAdoption_id());
+        return new AdoptResponseDto("success", adopt.getAdoptionId());
     }
-//    catch (Exception e){
-//        return new AdoptResponseDto("failed to get the id",adopt.getAdoption_id());
-//        }
-//    }
+    catch (Exception e){
+        return new AdoptResponseDto("failed to get the id",null);
+        }
+    }
 
-
+    /**********
+     * ***
+     * response list of pet and customer
+     * @Author kidus
+     * @param searchDto
+     * @return
+     */
     public Baselist<AdoptResponseDtos> get_adoption_requests(SearchDto searchDto) {
         Baselist<AdoptResponseDtos> adoptResponseDtosBaselist = new Baselist();
         List<AdoptResponseDtos> adoptResponseDtos = new ArrayList<>();
-        List<Adopt> adopts = adoptRepository.findBewteenDate(searchDto.getFrom_date(), searchDto.getTo_date());
+        List<Adopt> adopts = adoptRepository.findAllByCreatedOnBetween(searchDto.getFrom_date(), searchDto.getTo_date());
+//        List<Adopt> adopts = adoptRepository.findByCreated_onBetween(searchDto.getFrom_date(),searchDto.getTo_date());
         adopts.forEach(adopt -> {
             CustomerResponseDto customerResponseDto = new CustomerResponseDto();
-            customerResponseDto.setCustomer_id(adopt.getCustomer().getCustomer_id());
-            customerResponseDto.setCreated_on(adopt.getCustomer().getCreated_on());
+            customerResponseDto.setCustomer_id(adopt.getCustomer().getCustomerId());
+            customerResponseDto.setCreated_on(adopt.getCustomer().getCreatedOn());
             customerResponseDto.setPhonenumber(adopt.getCustomer().getPhonenumber());
             customerResponseDto.setFullname(adopt.getCustomer().getFullname());
-            customerResponseDto.setUpdated_on(adopt.getCustomer().getUpdated_on());
+            customerResponseDto.setUpdated_on(adopt.getCustomer().getUpdatedOn());
             PetResponseDto petResponseDto = new PetResponseDto();
             petResponseDto.setType(adopt.getPet().getType());
             petResponseDto.setAge(adopt.getPet().getAge());
-            petResponseDto.setCreated_on(adopt.getPet().getCreated_on());
-            petResponseDto.setStatus(adopt.getPet().getGood_with_children());
+            petResponseDto.setCreatedOn(adopt.getPet().getCreatedOn());
+            petResponseDto.setStatus(adopt.getPet().getGoodWithChildren());
             petResponseDto.setSize(adopt.getPet().getSize());
             petResponseDto.setGender(adopt.getPet().getGender());
-            petResponseDto.setPet_id(adopt.getPet().getPet_id());
-            petResponseDto.setUpdated_on(adopt.getPet().getUpdated_on());
+            petResponseDto.setPetId(adopt.getPet().getPetId());
+            petResponseDto.setUpdatedOn(adopt.getPet().getUpdatedOn());
 
 
             AdoptResponseDtos adoptResponseDto = new AdoptResponseDtos();
-            adoptResponseDto.setAdopt_Id(adopt.getAdoption_id());
-            adoptResponseDto.setCreated_on(adopt.getCreated_on());
-            adoptResponseDto.setUpdated_on(adopt.getUpdated_on());
+            adoptResponseDto.setAdopt_Id(adopt.getAdoptionId());
+            adoptResponseDto.setCreated_on(adopt.getCreatedOn());
+            adoptResponseDto.setUpdated_on(adopt.getUpdatedOn());
             adoptResponseDto.setPetResponseDto(petResponseDto);
             adoptResponseDto.setCustomerResponseDto(customerResponseDto);
             adoptResponseDtos.add(adoptResponseDto);
@@ -101,6 +119,11 @@ public class AdoptService {
 
     }
 
+    /*************
+     * response for list of adoption
+     * @param searchDto
+     * @return
+     */
     public ReportResponseDto generate_report(SearchDto searchDto) {
 
         List<AdoptRepository.ListweeklyandTotalCount> listweeklyandTotalCounts = adoptRepository.listweeklyandTotalCounts(searchDto.getFrom_date(), searchDto.getTo_date());
@@ -109,6 +132,7 @@ public class AdoptService {
 
                 Datas datas =new Datas();
             datas.setWeekly_adoption_requests(listweeklyandTotalCounts);
+//            datas.setAdopted_pet_types(listweeklyandTotalCounts);
             reportResponseDto.setData(datas);
             listweeklyandTotalCounts.add(listweeklyandTotalCount);
 

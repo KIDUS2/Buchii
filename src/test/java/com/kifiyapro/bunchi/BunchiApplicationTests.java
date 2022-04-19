@@ -60,8 +60,8 @@ class BunchiApplicationTests {
 
 
         Customer customer = new Customer();
-        customer.setPhonenumber("lioyq");
-        customer.setFullname("kifiya");
+        customer.setPhonenumber("0927249739");
+        customer.setFullname("Buchi");
         customer.setCreatedOn(Instant.now());
 
         customerRepository.save(customer);

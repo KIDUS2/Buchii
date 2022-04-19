@@ -3,10 +3,15 @@ package com.kifiyapro.bunchi.Service;
 import com.kifiyapro.bunchi.dto.PetIdResponseDto;
 import com.kifiyapro.bunchi.dto.PetSearchDto;
 import com.kifiyapro.bunchi.dto.responseDto.PetResponseDto;
+import com.kifiyapro.bunchi.dto.responseDto.ResponseDto;
 import com.kifiyapro.bunchi.modle.Pet;
 import com.kifiyapro.bunchi.repository.PetRepository;
 import com.kifiyapro.bunchi.repository.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -56,7 +61,6 @@ public class PetService {
             pet.setSize(pets.getSize());
             pet.setPhoto(fileName);
             pet.setGoodWithChildren(pets.getGoodWithChildren());
-
             petRepository.save(pet);
             String uploadDir = "pet-photos/" + pet.getPetId();
 
@@ -79,15 +83,9 @@ public class PetService {
      */
 
     public List<PetResponseDto> get_pets(PetSearchDto petRequestDto) {
-//        Baselist<PetRes> petResponseDtoBaselist = new Baselist();
+
         List<PetResponseDto> petResponseDtos = new ArrayList<>();
         List<Pet> pets = petRepository.findAllByTypeAndAgeAndSizeAndGoodWithChildrenAndGender(petRequestDto.getType(), petRequestDto.getAge(), petRequestDto.getSize(), petRequestDto.getGoodWithChildren(),petRequestDto.getGender(),petRequestDto.getLimit());
-//
-//            PetRes petResponseDto = new PetRes();
-//            petResponseDto.setPetId(pet.getPetId());
-////           petResponseDto.setCreatedOn(pet.getCreatedOn());
-//            petResponseDtos.add(petResponseDto);
-//        });
         pets.forEach(pet -> {
             PetResponseDto petRes=new PetResponseDto();
             petRes.setPetId(pet.getPetId());
@@ -95,7 +93,6 @@ public class PetService {
             petRes.setSize(pet.getSize());
             petRes.setType(pet.getType());
             petRes.setGender(pet.getGender());
-//            petRes.setPhotos(pet.getPhoto());
             pet.setGoodWithChildren(pet.getGoodWithChildren());
             petResponseDtos.add(petRes);
         });
@@ -104,17 +101,17 @@ public class PetService {
             //mapping pets->pet\Responsedto
 
 
-            return petResponseDtos;
+
         }else{
-            return petResponseDtos;
-            /*Long remaining=petRequestDto.getLimit()-pets.size();
+
+            Long remaining=petRequestDto.getLimit()-pets.size();
             //mapping pets->pet\Responsedto
             String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJIa0NZZThLTHkxYkk0Q05rbHMxWnBOR0xtejNzcTltT05lc0ozNEFkbUtTU29GSG5QWiIsImp0aSI6ImM4ODUwMWY3NDg1MTE5ZTRjYjI1ZWZhODYyOWVlMmI1MTcwYjE3ZjRmOTdiMTdmNTJhODY4NmI3MmY4OTg0OGE1YmE2OTA4ZDFlMTE2NGMzIiwiaWF0IjoxNjUwMzY1NDIzLCJuYmYiOjE2NTAzNjU0MjMsImV4cCI6MTY1MDM2OTAyMywic3ViIjoiIiwic2NvcGVzIjpbXX0.tgiIIAsPj7mPKptjb8_YCmNZXO8abUBJOkMv18hmnL3ebAGPsdrVVu7DFknCns9noQOybxXPz_8hh4nylYg__PQ_3xSCAB1TBHd4R1krtdiy9hqmaC52M1eIegM5kUwOgo6LeKrV3Oys3E2BhpZ_Sl2EAjooI44FRiMqJ_ngPT_hY667udyjA5sURQ7yz3gr9vIqAS60ngIGPIppa3MUyjJLcUYvBQ2fc7oWJ96_Z2R8Jy1r5-abmsibcXxTcMkpwKU31fd4CiD8TxWt7UaBawDrBX274Vbb7HE1gIXY9qw6s8tzwioFSgfJ64iPaQdkhzPjMFx8Z-WFhgY-h6JrTA";
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + token);
             String t="https://api.petfinder.com/v2/animals?type=dog&limit="+String.valueOf(remaining)+"&page=2";
             HttpEntity<String> entity = new HttpEntity <> (headers);
-            ResponseEntity<com.kifiyapro.bunchi.dto.responseDto.ResponseDto> exchange =
+            ResponseEntity<ResponseDto> exchange =
                     restTemplate.exchange(t, HttpMethod.GET, entity, com.kifiyapro.bunchi.dto.responseDto.ResponseDto.class);
             exchange.getBody().getAnimals().forEach(animals -> {
                 if(animals.getPhotos()!=null && animals.getPhotos().length>0) {
@@ -132,13 +129,13 @@ public class PetService {
 
                     petResponseDtos.add(petResponseDto);
                 }
-            });*/
+            });
 
         }
 
 
 
-//        return petResponseDtos;
+        return petResponseDtos;
 
     }
 

@@ -120,23 +120,6 @@ public class AdoptService {
      * @param searchDto
      * @return
      */
-//    public ReportResponseDto generate_report(SearchDto searchDto) {
-//
-//        List<AdoptRepository.ListweeklyandTotalCount> listweeklyandTotalCounts = adoptRepository.listweeklyandTotalCounts(searchDto.getFrom_date(), searchDto.getTo_date());
-//        listweeklyandTotalCounts.forEach(listweeklyandTotalCount -> {
-//            ReportResponseDto reportResponseDto = new ReportResponseDto();
-//
-//                Datas datas =new Datas();
-//            datas.setWeekly_adoption_requests(listweeklyandTotalCounts);
-////            datas.setAdopted_pet_types(listweeklyandTotalCounts);
-//
-//            reportResponseDto.setData(datas);
-//            listweeklyandTotalCounts.add(listweeklyandTotalCount);
-//
-//        });
-//        return new ReportResponseDto("success",null);
-//    }
-
 
     int petCount = 0;
 

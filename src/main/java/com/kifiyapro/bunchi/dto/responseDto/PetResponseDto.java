@@ -1,10 +1,9 @@
 package com.kifiyapro.bunchi.dto.responseDto;
 
+import com.kifiyapro.bunchi.modle.Photos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
 
 @Data
 @AllArgsConstructor
@@ -13,11 +12,11 @@ import java.time.Instant;
 public class PetResponseDto {
     private Long petId;
     private String type;
-    private Long age;
+    private String age;
+    private  Photos[] photos;
     private String size;
     private Boolean status;
     private String gender;
-    private Instant createdOn;
-    private Instant updatedOn;
+
 
 }

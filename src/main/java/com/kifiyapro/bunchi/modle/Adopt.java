@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 
 //import nonapi.io.github.classgraph.json.Id;
 
@@ -35,7 +36,7 @@ public class Adopt {
 
 
     @Column(name = "created_on")
-    private Instant createdOn;
+    private Date createdOn;
 
 
     @Column(name = "updated_on")

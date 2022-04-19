@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -13,6 +14,6 @@ public class AdoptResponseDtos {
     private CustomerResponseDto customerResponseDto;
     private PetResponseDto petResponseDto;
     private Long Adopt_Id;
-    private Instant created_on;
+    private Date created_on;
     private  Instant updated_on;
 }

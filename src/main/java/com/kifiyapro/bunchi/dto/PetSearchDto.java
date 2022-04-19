@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class PetSearchDto {
 
     private String type;
-    private Long age;
+    private String age;
     private String size;
     private Boolean goodWithChildren;
     private String gender;

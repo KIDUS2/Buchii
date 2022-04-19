@@ -23,7 +23,7 @@ public class Pet {
     @Column(name = "type")
     private String type;
     @Column(name = "age")
-    private Long age;
+    private String age;
     @Column(name = "good_with_children")
     private Boolean goodWithChildren;
 

@@ -1,8 +1,11 @@
 package com.kifiyapro.bunchi.dto.responseDto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
